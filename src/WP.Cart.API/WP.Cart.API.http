@@ -1,0 +1,6 @@
+@WP.Cart.API_HostAddress = http://localhost:5099
+
+GET {{WP.Cart.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

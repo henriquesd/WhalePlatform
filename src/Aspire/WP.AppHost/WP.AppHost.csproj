@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>fc1537a9-1cf8-47cf-9b8d-b1b4d3135b2f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\WP.Cart.API\WP.Cart.API.csproj" />
+    <ProjectReference Include="..\..\WP.Catalog.API\WP.Catalog.API.csproj" />
+    <ProjectReference Include="..\..\WP.Customer.API\WP.Customer.API.csproj" />
+    <ProjectReference Include="..\..\WP.Order.API\WP.Order.API.csproj" />
+    <ProjectReference Include="..\..\WP.Payment.API\WP.Payment.API.csproj" />
+    <ProjectReference Include="..\..\WP.Identity.API\WP.Identity.API.csproj" />
+    <ProjectReference Include="..\..\WP.Web\WP.Web\WP.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>
