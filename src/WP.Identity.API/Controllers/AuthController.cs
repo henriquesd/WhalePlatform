@@ -10,9 +10,8 @@ using WP.Identity.API.Extensions;
 
 namespace WP.Identity.API.Controllers
 {
-    [ApiController]
     [Route("api/identity")]
-    public class AuthController : Controller
+    public class AuthController : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
@@ -33,7 +32,7 @@ namespace WP.Identity.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var user = new IdentityUser
             {
@@ -46,12 +45,16 @@ namespace WP.Identity.API.Controllers
 
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, isPersistent: false);
                 var jwtToken = await GenerateJwt(registerDto.Email);
-                return Ok(jwtToken);
+                return CustomResponse(jwtToken);
             }
 
-            return BadRequest();
+            foreach (var error in result.Errors)
+            {
+                AddProcessingError(error.Description);
+            }
+
+            return CustomResponse();
         }
 
         [HttpPost("login")]
@@ -60,7 +63,7 @@ namespace WP.Identity.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult> Login(LoginDto loginDto)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var result = await _signInManager.PasswordSignInAsync(
                 loginDto.Email,
@@ -71,10 +74,18 @@ namespace WP.Identity.API.Controllers
             if (result.Succeeded)
             {
                 var jwtToken = await GenerateJwt(loginDto.Email);
-                return Ok(jwtToken);
+                return CustomResponse(jwtToken);
             }
 
-            return BadRequest();
+            if (result.IsLockedOut)
+            {
+                AddProcessingError("User temporarily locked out due to invalid login attempts.");
+                return CustomResponse();
+            }
+
+            AddProcessingError("Invalid username or password.");
+
+            return CustomResponse();
         }
     
         private async Task<LoginResponseDto> GenerateJwt(string email)
