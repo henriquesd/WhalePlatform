@@ -1,0 +1,29 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WP.Identity.API.Models
+{
+    public class UserRegister
+    {
+        [Required(ErrorMessage = "The field {0} is required.")]
+        [EmailAddress(ErrorMessage = "The field {0} is in an invalid format.")]
+        public required string Email { get; set; }
+
+        [Required(ErrorMessage = "The field {0} is required.")]
+        [StringLength(100, ErrorMessage = "The field {0} must be at least {2} and at most {1} characters long.", MinimumLength = 6)]
+        public required string Password { get; set; }
+
+        [Compare("Password", ErrorMessage = "The passwords do not match.")]
+        public required string PasswordConfirmation { get; set; }
+    }
+
+    public class UserLogin
+    {
+        [Required(ErrorMessage = "The field {0} is required.")]
+        [EmailAddress(ErrorMessage = "The field {0} is in an invalid format.")]
+        public required string Email { get; set; }
+
+        [Required(ErrorMessage = "The field {0} is required.")]
+        [StringLength(100, ErrorMessage = "The field {0} must be at least {2} and at most {1} characters long.", MinimumLength = 6)]
+        public required string Password { get; set; }
+    }
+}
