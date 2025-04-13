@@ -1,10 +1,12 @@
 ﻿using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
+using System.Reflection;
 
 namespace WP.Identity.API.Configuration
 {
     public static class SwaggerConfig
     {
-        public static void AddSwagger(this IServiceCollection services)
+        public static void ResolveSwaggerConfig(this IServiceCollection services)
         {
             services.AddEndpointsApiExplorer();
 
@@ -19,15 +21,20 @@ namespace WP.Identity.API.Configuration
                 });
             });
 
+            services.ConfigureSwaggerGen(options => options.ExampleFilters());
+            services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
         }
 
-        public static void UseSwaggerUI(this WebApplication app)
+        public static void ConfigureSwagger(this WebApplication app)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            if (app.Environment.IsDevelopment())
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-            });
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                });
+            }
         }
     }
 }

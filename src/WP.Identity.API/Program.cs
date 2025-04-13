@@ -1,12 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
 using WP.Identity.API.Configuration;
-using WP.Identity.API.Data;
-using WP.Identity.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,17 +12,13 @@ builder.Services.AddIdentityConfig(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-builder.Services.AddSwagger();
+builder.Services.ResolveSwaggerConfig();
 
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwaggerUI();
-}
+app.ConfigureSwagger();
 
 app.UseHttpsRedirection();
 
