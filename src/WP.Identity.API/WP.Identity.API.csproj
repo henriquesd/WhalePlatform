@@ -29,8 +29,4 @@
     <ProjectReference Include="..\Aspire\WP.ServiceDefaults\WP.ServiceDefaults.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>
