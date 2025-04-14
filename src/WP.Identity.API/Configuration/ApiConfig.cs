@@ -13,6 +13,7 @@
         {
             app.UseHttpsRedirection();
 
+            // Ensure authentication and authorization are configured before handling requests to controllers
             app.UseIdentityConfiguration();
 
             app.MapControllers();
