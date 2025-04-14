@@ -1,9 +1,14 @@
+using WP.AppHost.Extensions;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 builder.AddProject<Projects.WP_Web>("webfrontend")
     .WithExternalHttpEndpoints();
 
-builder.AddProject<Projects.WP_Identity_API>("wp-identity-api");
+builder.AddProject<Projects.WP_Identity_API>("wp-identity-api")
+    .WithSwaggerUI()
+    .WithScalar()
+    .withReDoc();
 
 builder.AddProject<Projects.WP_Cart_API>("wp-cart-api");
 
