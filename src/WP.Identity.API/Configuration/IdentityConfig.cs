@@ -10,7 +10,7 @@ namespace WP.Identity.API.Configuration
 {
     public static class IdentityConfig
     {
-        public static IServiceCollection AddIdentityConfig(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
@@ -49,6 +49,14 @@ namespace WP.Identity.API.Configuration
             });
 
             return services;
+        }
+
+        public static IApplicationBuilder UseIdentityConfiguration(this WebApplication app)
+        {
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            return app;
         }
     }
 }

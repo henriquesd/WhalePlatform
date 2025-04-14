@@ -45,7 +45,7 @@ namespace WP.Identity.API.Controllers
 
             if (result.Succeeded)
             {
-                var jwtToken = await GenerateJwt(registerDto.Email);
+                var jwtToken = await CreateJwtResponse(registerDto.Email);
                 return CustomResponse(jwtToken);
             }
 
@@ -73,7 +73,7 @@ namespace WP.Identity.API.Controllers
 
             if (result.Succeeded)
             {
-                var jwtToken = await GenerateJwt(loginDto.Email);
+                var jwtToken = await CreateJwtResponse(loginDto.Email);
                 return CustomResponse(jwtToken);
             }
 
@@ -88,13 +88,21 @@ namespace WP.Identity.API.Controllers
             return CustomResponse();
         }
     
-        private async Task<LoginResponseDto> GenerateJwt(string email)
+        private async Task<LoginResponseDto> CreateJwtResponse(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            var claims = await _userManager.GetClaimsAsync(user);
+            var user = await _userManager.FindByEmailAsync(email!);
+            var claims = await _userManager.GetClaimsAsync(user!);
 
-            ClaimsIdentity identityClaims = await BuildUserClaims(user, claims);
+            ClaimsIdentity identityClaims = await BuildUserClaims(user!, claims);
+            var encodedToken = CreateJwtToken(identityClaims);
 
+            var response = BuildLoginResponse(encodedToken, user!, claims);
+
+            return response;
+        }
+
+        private string CreateJwtToken(ClaimsIdentity identityClaims)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
 
@@ -110,10 +118,7 @@ namespace WP.Identity.API.Controllers
             });
 
             var encodedToken = tokenHandler.WriteToken(token);
-
-            var response = BuildLoginResponse(encodedToken, user, claims);
-
-            return response;
+            return encodedToken;
         }
 
         private async Task<ClaimsIdentity> BuildUserClaims(IdentityUser user, IList<Claim> claims)

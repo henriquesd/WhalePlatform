@@ -6,7 +6,7 @@ namespace WP.Identity.API.Configuration
 {
     public static class SwaggerConfig
     {
-        public static void ResolveSwaggerConfig(this IServiceCollection services)
+        public static void AddSwaggerConfiguration(this IServiceCollection services)
         {
             services.AddEndpointsApiExplorer();
 
@@ -25,7 +25,7 @@ namespace WP.Identity.API.Configuration
             services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
         }
 
-        public static void ConfigureSwagger(this WebApplication app)
+        public static void UseSwaggerConfiguration(this WebApplication app)
         {
             if (app.Environment.IsDevelopment())
             {

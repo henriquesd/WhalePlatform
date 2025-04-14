@@ -2,29 +2,37 @@ using WP.Identity.API.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
 builder.AddServiceDefaults();
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddApiConfiguration();
 
-builder.Services.AddIdentityConfig(builder.Configuration);
+builder.Services.AddIdentityConfiguration(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-builder.Services.ResolveSwaggerConfig();
+builder.Services.AddSwaggerConfiguration();
 
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
-app.ConfigureSwagger();
+app.UseSwaggerConfiguration();
 
-app.UseHttpsRedirection();
+app.UseApiConfiguration(builder.Environment);
 
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
+app.UseIdentityConfiguration();
 
 app.Run();
