@@ -17,7 +17,7 @@ namespace WP.AppHost.Extensions
             return builder.WithOpenApiDocs("scalar-docs", "Scalar API Documentation", "scalar/v1");
         }
 
-        internal static IResourceBuilder<T> withReDoc<T>(this IResourceBuilder<T> builder)
+        internal static IResourceBuilder<T> WithReDoc<T>(this IResourceBuilder<T> builder)
             where T : IResourceWithEndpoints
         {
             return builder.WithOpenApiDocs("redoc-docs", "ReDoc API Documentation", "api-docs");

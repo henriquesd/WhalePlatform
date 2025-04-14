@@ -8,7 +8,7 @@ builder.AddProject<Projects.WP_Web>("webfrontend")
 builder.AddProject<Projects.WP_Identity_API>("wp-identity-api")
     .WithSwaggerUI()
     .WithScalar()
-    .withReDoc();
+    .WithReDoc();
 
 builder.AddProject<Projects.WP_Cart_API>("wp-cart-api");
 
