@@ -33,29 +33,31 @@ namespace WP.AppHost.Extensions
             return builder.WithCommand(
                 name,
                 displayName,
-                executeCommand: async _ =>
+                context =>
                 {
                     try
                     {
                         // Base URL
                         var endpoint = builder.GetEndpoint("https");
-
                         var url = $"{endpoint.Url}/{openApiUiPath}";
 
                         Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
 
-                        return new ExecuteCommandResult { Success = true };
+                        return Task.FromResult(new ExecuteCommandResult { Success = true });
                     }
                     catch (Exception ex)
                     {
-                        return new ExecuteCommandResult { Success = false, ErrorMessage = ex.ToString() };
+                        return Task.FromResult(new ExecuteCommandResult { Success = false, ErrorMessage = ex.ToString() });
                     }
                 },
-                updateState: context => context.ResourceSnapshot.HealthStatus == HealthStatus.Healthy
-                   ? ResourceCommandState.Enabled
-                   : ResourceCommandState.Disabled,
-                iconName: "Document",
-                iconVariant: IconVariant.Filled);
+                new CommandOptions
+                {
+                    UpdateState = context => context.ResourceSnapshot.HealthStatus == HealthStatus.Healthy
+                        ? ResourceCommandState.Enabled
+                        : ResourceCommandState.Disabled,
+                    IconName = "Document",
+                    IconVariant = IconVariant.Filled
+                });
         }
     }
 }
