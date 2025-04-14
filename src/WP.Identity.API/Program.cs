@@ -23,13 +23,13 @@ builder.Services.AddIdentityConfiguration(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-builder.Services.AddSwaggerConfiguration();
+builder.Services.AddOpenApiConfiguration();
 
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
-app.UseSwaggerConfiguration();
+app.UseOpenApiConfiguration();
 
 app.UseApiConfiguration(builder.Environment);
 
