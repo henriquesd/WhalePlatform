@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Aspire\WP.ServiceDefaults\WP.ServiceDefaults.csproj" />
     <ProjectReference Include="..\WP.Web.Client\WP.Web.Client.csproj" />
+    <PackageReference Include="Blazored.Toast" Version="4.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.15" />
   </ItemGroup>
 

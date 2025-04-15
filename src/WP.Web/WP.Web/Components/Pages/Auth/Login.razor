@@ -1,0 +1,48 @@
+﻿@page "/login"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Mvc
+@using WP.Web.Interfaces
+@using WP.Web.Models
+@inject NavigationManager Navigation
+@inject IToastService ToastService
+
+<EditForm Model="UserLogin" OnSubmit="HandleValidSubmit" FormName="Login">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Email:</label>
+        <InputText @bind-Value="UserLogin.Email" class="form-control" />
+    </div>
+
+    <div>
+        <label>Password:</label>
+        <InputText @bind-Value="UserLogin.Password" type="password" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    private UserLogin? UserLogin { get; set; }
+
+    protected override void OnInitialized() => UserLogin ??= new();
+
+    [Inject]
+    private IAuthService AuthService { get; set; }
+
+    private async Task HandleValidSubmit()
+    {
+        var result = await AuthService.Login(UserLogin!);
+
+        if (result is OkResult)
+        {
+            ToastService.ShowSuccess("Sucessful login!");
+
+            Navigation.NavigateTo("/");
+        }
+
+        ToastService.ShowError("Some error occured");
+    }
+}

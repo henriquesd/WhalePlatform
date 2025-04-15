@@ -1,0 +1,52 @@
+﻿@page "/register"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Mvc
+@using WP.Web.Interfaces
+@using WP.Web.Models
+@inject NavigationManager Navigation
+@inject IToastService ToastService
+
+<EditForm Model="UserRegister" OnValidSubmit="HandleValidSubmit" FormName="Register">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Email:</label>
+        <InputText id="email" @bind-Value="UserRegister!.Email" class="form-control" />
+    </div>
+
+    <div>
+        <label>Password:</label>
+        <InputText id="password" @bind-Value="UserRegister.Password" type="password" class="form-control" />
+    </div>
+
+    <div>
+        <label>Confirm Password:</label>
+        <InputText id="passwordConfirmation" @bind-Value="UserRegister.PasswordConfirmation" type="password" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    private UserRegister? UserRegister { get; set; }
+
+    protected override void OnInitialized() => UserRegister ??= new();
+
+    [Inject]
+    private IAuthService AuthService { get; set; }
+
+    private async Task HandleValidSubmit()
+    {
+        var result = await AuthService.Register(UserRegister!);
+        
+        if (result is OkResult)
+        {
+            ToastService.ShowSuccess("Registration successful!");
+            Navigation.NavigateTo("/");
+        }
+     
+        ToastService.ShowError("Some error occured");
+    }
+}
