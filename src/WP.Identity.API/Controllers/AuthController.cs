@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using WP.Identity.API.Dtos;
 using WP.Identity.API.Extensions;
+using WP.WebAPI.Core.Controllers;
 
 namespace WP.Identity.API.Controllers
 {

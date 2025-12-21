@@ -11,6 +11,9 @@
   <Folder Name="/src/BuildingBlocs/Core/">
     <Project Path="src/WP.Core/WP.Core.csproj" />
   </Folder>
+  <Folder Name="/src/BuildingBlocs/Services/">
+    <Project Path="src/WP.WebAPI.Core/WP.WebAPI.Core.csproj" Id="22ae9d15-03ee-4e88-b37e-ff8ef1e5fac5" />
+  </Folder>
   <Folder Name="/src/Services/" />
   <Folder Name="/src/Services/Cart/">
     <Project Path="src/WP.Cart.API/WP.Cart.API.csproj" />

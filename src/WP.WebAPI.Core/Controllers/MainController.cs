@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace WP.Identity.API.Controllers
+namespace WP.WebAPI.Core.Controllers
 {
     [ApiController]
     public abstract class MainController : Controller
@@ -38,7 +38,7 @@ namespace WP.Identity.API.Controllers
         protected bool ValidateOperationResult()
         {
             var result = Errors.Count == 0;
-            
+
             return result;
         }
 
@@ -46,7 +46,7 @@ namespace WP.Identity.API.Controllers
         {
             Errors.Add(error);
         }
-        
+
         protected void ClearProcessingErrors()
         {
             Errors.Clear();
