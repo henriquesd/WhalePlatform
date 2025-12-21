@@ -1,0 +1,34 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Aspire/">
+    <Project Path="src/Aspire/WP.AppHost/WP.AppHost.csproj" />
+    <Project Path="src/Aspire/WP.ServiceDefaults/WP.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/src/BuildingBlocs/" />
+  <Folder Name="/src/BuildingBlocs/Core/">
+    <Project Path="src/WP.Core/WP.Core.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/Cart/">
+    <Project Path="src/WP.Cart.API/WP.Cart.API.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Catalog/">
+    <Project Path="src/WP.Catalog.API/WP.Catalog.API.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Customer/">
+    <Project Path="src/WP.Customer.API/WP.Customer.API.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Identity/">
+    <Project Path="src/WP.Identity.API/WP.Identity.API.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Order/">
+    <Project Path="src/WP.Order.API/WP.Order.API.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Payment/">
+    <Project Path="src/WP.Payment.API/WP.Payment.API.csproj" />
+  </Folder>
+  <Folder Name="/src/Web/">
+    <Project Path="src/WP.Web/WP.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+</Solution>
