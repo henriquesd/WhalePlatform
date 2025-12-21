@@ -20,6 +20,4 @@ builder.AddProject<Projects.WP_Payment_API>("wp-payment-api");
 
 builder.AddProject<Projects.WP_Order_API>("wp-order-api");
 
-builder.AddProject<Projects.WP_Web>("wp-web");
-
 builder.Build().Run();
