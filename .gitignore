@@ -399,6 +399,48 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+### Blazor WebAssembly ###
+# Blazor WebAssembly build output
+**/wwwroot/_framework/
+**/wwwroot/_content/
+
+# Blazor compiled CSS/JS with hash
+**/wwwroot/css/app.*.css
+**/wwwroot/js/app.*.js
+
+# Blazor compressed files
+**/*.wasm.gz
+**/*.wasm.br
+**/*.dll.gz
+**/*.dll.br
+**/blazor.boot.json.gz
+**/blazor.boot.json.br
+
+# Service Worker generated files
+**/service-worker-assets.js
+**/service-worker.published.js
+
+# Client-side libraries managed by LibMan (restore with 'libman restore')
+**/wwwroot/lib/
+
+### .NET Aspire ###
+# Aspire dashboard and orchestration
+**/.aspire/
+**/aspire-manifest.json
+*.aspire.yaml
+
+# Aspire telemetry and logs
+**/aspire-logs/
+**/aspire-traces/
+**/aspire-metrics/
+
+# Aspire launch settings backup
+**/launchSettings.json.bak
+
+# Aspire distributed application artifacts
+**/dcpinfo
+**/.dcpinfo/
+
 ### DotnetCore ###
 # .NET Core build folders
 bin/
