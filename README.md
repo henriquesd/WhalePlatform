@@ -29,9 +29,7 @@ RabbitMQ is used for asynchronous communication between services.
 Use the following command to start RabbitMQ with the management UI:
 
 ```bash
-docker run -d \
-  --hostname rabbit-host \
-  --name rabbit-whaleplatform \
-  -p 15672:15672 \
-  -p 5672:5672 \
-  rabbitmq:management
+docker run -d --hostname rabbit-host --name rabbit-whaleplatform -p 15672:15672 -p 5672:5672 rabbitmq:management
+
+RabbitMQ: http://localhost:15672/
+Username: guest
