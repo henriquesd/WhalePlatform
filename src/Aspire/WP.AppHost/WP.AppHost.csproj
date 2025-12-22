@@ -12,13 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WP.Basket.API\WP.Basket.API.csproj" />
-    <ProjectReference Include="..\..\WP.Catalog.API\WP.Catalog.API.csproj" />
-    <ProjectReference Include="..\..\WP.Customer.API\WP.Customer.API.csproj" />
-    <ProjectReference Include="..\..\WP.Order.API\WP.Order.API.csproj" />
-    <ProjectReference Include="..\..\WP.Payment.API\WP.Payment.API.csproj" />
-    <ProjectReference Include="..\..\WP.Identity.API\WP.Identity.API.csproj" />
-    <ProjectReference Include="..\..\WP.Web\WP.Web\WP.Web.csproj" />
+    <ProjectReference Include="..\..\Services\WP.Basket.API\WP.Basket.API.csproj" />
+    <ProjectReference Include="..\..\Services\WP.Catalog.API\WP.Catalog.API.csproj" />
+    <ProjectReference Include="..\..\Services\WP.Customer.API\WP.Customer.API.csproj" />
+    <ProjectReference Include="..\..\Services\WP.Order.API\WP.Order.API.csproj" />
+    <ProjectReference Include="..\..\Services\WP.Payment.API\WP.Payment.API.csproj" />
+    <ProjectReference Include="..\..\Services\WP.Identity.API\WP.Identity.API.csproj" />
+    <ProjectReference Include="..\..\Web\WP.Web\WP.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aspire\WP.ServiceDefaults\WP.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\..\Aspire\WP.ServiceDefaults\WP.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

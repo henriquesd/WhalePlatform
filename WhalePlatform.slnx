@@ -9,36 +9,36 @@
   </Folder>
   <Folder Name="/src/BuildingBlocks/" />
   <Folder Name="/src/BuildingBlocks/Core/">
-    <Project Path="src/WP.Core/WP.Core.csproj" />
+    <Project Path="src/BuildingBlocks/WP.Core/WP.Core.csproj" />
   </Folder>
   <Folder Name="/src/BuildingBlocks/MessageBus/">
-    <Project Path="src/WP.MessageBus/WP.MessageBus.csproj" Id="5b1293af-cecd-4faf-a678-1f13b615c561" />
+    <Project Path="src/BuildingBlocks/WP.MessageBus/WP.MessageBus.csproj" Id="5b1293af-cecd-4faf-a678-1f13b615c561" />
   </Folder>
   <Folder Name="/src/BuildingBlocks/Services/">
-    <Project Path="src/WP.WebAPI.Core/WP.WebAPI.Core.csproj" Id="22ae9d15-03ee-4e88-b37e-ff8ef1e5fac5" />
+    <Project Path="src/BuildingBlocks/WP.WebAPI.Core/WP.WebAPI.Core.csproj" />
   </Folder>
   <Folder Name="/src/Services/" />
   <Folder Name="/src/Services/Basket/">
-    <Project Path="src/WP.Basket.API/WP.Basket.API.csproj" />
+    <Project Path="src/Services/WP.Basket.API/WP.Basket.API.csproj" />
   </Folder>
   <Folder Name="/src/Services/Catalog/">
-    <Project Path="src/WP.Catalog.API/WP.Catalog.API.csproj" />
+    <Project Path="src/Services/WP.Catalog.API/WP.Catalog.API.csproj" />
   </Folder>
   <Folder Name="/src/Services/Customer/">
-    <Project Path="src/WP.Customer.API/WP.Customer.API.csproj" />
+    <Project Path="src/Services/WP.Customer.API/WP.Customer.API.csproj" />
   </Folder>
   <Folder Name="/src/Services/Identity/">
-    <Project Path="src/WP.Identity.API/WP.Identity.API.csproj" />
+    <Project Path="src/Services/WP.Identity.API/WP.Identity.API.csproj" />
   </Folder>
   <Folder Name="/src/Services/Order/">
-    <Project Path="src/WP.Order.API/WP.Order.API.csproj" />
+    <Project Path="src/Services/WP.Order.API/WP.Order.API.csproj" />
   </Folder>
   <Folder Name="/src/Services/Payment/">
-    <Project Path="src/WP.Payment.API/WP.Payment.API.csproj" />
+    <Project Path="src/Services/WP.Payment.API/WP.Payment.API.csproj" />
   </Folder>
   <Folder Name="/src/Web/">
-    <Project Path="src/WP.Web/WP.Web.Client/WP.Web.Client.csproj" />
-    <Project Path="src/WP.Web/WP.Web/WP.Web.csproj" />
+    <Project Path="src/Web/WP.Web.Client/WP.Web.Client.csproj" />
+    <Project Path="src/Web/WP.Web/WP.Web.csproj" />
   </Folder>
   <Folder Name="/tests/" />
 </Solution>

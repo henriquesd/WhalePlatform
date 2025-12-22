@@ -31,9 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aspire\WP.ServiceDefaults\WP.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\WP.Core\WP.Core.csproj" />
-    <ProjectReference Include="..\WP.WebAPI.Core\WP.WebAPI.Core.csproj" />
+    <ProjectReference Include="..\..\Aspire\WP.ServiceDefaults\WP.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\WP.Core\WP.Core.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\WP.WebAPI.Core\WP.WebAPI.Core.csproj" />
   </ItemGroup>
 
 </Project>
