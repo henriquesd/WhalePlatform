@@ -7,19 +7,19 @@
     <Project Path="src/Aspire/WP.AppHost/WP.AppHost.csproj" />
     <Project Path="src/Aspire/WP.ServiceDefaults/WP.ServiceDefaults.csproj" />
   </Folder>
-  <Folder Name="/src/BuildingBlocs/" />
-  <Folder Name="/src/BuildingBlocs/Core/">
+  <Folder Name="/src/BuildingBlocks/" />
+  <Folder Name="/src/BuildingBlocks/Core/">
     <Project Path="src/WP.Core/WP.Core.csproj" />
   </Folder>
-  <Folder Name="/src/BuildingBlocs/MessageBus/">
+  <Folder Name="/src/BuildingBlocks/MessageBus/">
     <Project Path="src/WP.MessageBus/WP.MessageBus.csproj" Id="5b1293af-cecd-4faf-a678-1f13b615c561" />
   </Folder>
-  <Folder Name="/src/BuildingBlocs/Services/">
+  <Folder Name="/src/BuildingBlocks/Services/">
     <Project Path="src/WP.WebAPI.Core/WP.WebAPI.Core.csproj" Id="22ae9d15-03ee-4e88-b37e-ff8ef1e5fac5" />
   </Folder>
   <Folder Name="/src/Services/" />
-  <Folder Name="/src/Services/Cart/">
-    <Project Path="src/WP.Cart.API/WP.Cart.API.csproj" />
+  <Folder Name="/src/Services/Basket/">
+    <Project Path="src/WP.Basket.API/WP.Basket.API.csproj" />
   </Folder>
   <Folder Name="/src/Services/Catalog/">
     <Project Path="src/WP.Catalog.API/WP.Catalog.API.csproj" />

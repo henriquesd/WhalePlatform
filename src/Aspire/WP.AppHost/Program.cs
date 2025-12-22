@@ -10,7 +10,7 @@ builder.AddProject<Projects.WP_Identity_API>("wp-identity-api")
     .WithScalar()
     .WithReDoc();
 
-builder.AddProject<Projects.WP_Cart_API>("wp-cart-api");
+builder.AddProject<Projects.WP_Basket_API>("wp-basket-api");
 
 builder.AddProject<Projects.WP_Catalog_API>("wp-catalog-api");
 

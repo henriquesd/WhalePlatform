@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WP.Cart.API\WP.Cart.API.csproj" />
+    <ProjectReference Include="..\..\WP.Basket.API\WP.Basket.API.csproj" />
     <ProjectReference Include="..\..\WP.Catalog.API\WP.Catalog.API.csproj" />
     <ProjectReference Include="..\..\WP.Customer.API\WP.Customer.API.csproj" />
     <ProjectReference Include="..\..\WP.Order.API\WP.Order.API.csproj" />
