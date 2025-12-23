@@ -5,6 +5,7 @@ using WP.WebAPI.Core.Controllers;
 
 namespace WP.Catalog.API.Controllers
 {
+    [Route("api")]
     public class CatalogController : MainController
     {
         private readonly IProductRepository _productRepository;
