@@ -1,0 +1,176 @@
+@page "/products"
+@rendermode InteractiveWebAssembly
+@using WP.Web.Client.Models
+@using WP.Web.Client.Services
+@inject ICatalogService CatalogService
+@inject NavigationManager Navigation
+
+<PageTitle>Products</PageTitle>
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Products</h2>
+        </div>
+        <div class="col-auto">
+            <a href="/products/create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create New Product
+            </a>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search products..." @bind="searchQuery" @bind:event="oninput" />
+                <button class="btn btn-outline-secondary" type="button" @onclick="Search">
+                    <i class="bi bi-search"></i> Search
+                </button>
+                @if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    <button class="btn btn-outline-secondary" type="button" @onclick="ClearSearch">
+                        <i class="bi bi-x-circle"></i> Clear
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Loading products...</p>
+        </div>
+    }
+    else if (products == null || !products.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            No products found. @if (!string.IsNullOrEmpty(searchQuery)) { <span>Try adjusting your search.</span> }
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var product in products)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(product.Image))
+                        {
+                            <img src="@product.Image" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/200?text=No+Image'" />
+                        }
+                        else
+                        {
+                            <img src="https://via.placeholder.com/200?text=No+Image" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;" />
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@product.Description</p>
+                            <p class="card-text">
+                                <strong>Price:</strong> $@product.Value.ToString("F2")<br />
+                                <strong>Stock:</strong> @product.StockQuantity units<br />
+                                <span class="badge @(product.Active ? "bg-success" : "bg-secondary")">
+                                    @(product.Active ? "Active" : "Inactive")
+                                </span>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-info" @onclick="() => ViewProduct(product.Id)">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (pagedResult != null && pagedResult.TotalResults > pageSize)
+        {
+            <nav aria-label="Product pagination" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                        <button class="page-link" @onclick="() => ChangePage(currentPage - 1)" disabled="@(currentPage == 1)">Previous</button>
+                    </li>
+                    
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        var pageNumber = i;
+                        <li class="page-item @(currentPage == pageNumber ? "active" : "")">
+                            <button class="page-link" @onclick="() => ChangePage(pageNumber)">@pageNumber</button>
+                        </li>
+                    }
+                    
+                    <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                        <button class="page-link" @onclick="() => ChangePage(currentPage + 1)" disabled="@(currentPage == totalPages)">Next</button>
+                    </li>
+                </ul>
+            </nav>
+        }
+    }
+</div>
+
+@code {
+    private List<ProductDto> products = new();
+    private PagedResult<ProductDto>? pagedResult;
+    private string searchQuery = string.Empty;
+    private bool isLoading = false;
+    private int currentPage = 1;
+    private int pageSize = 9;
+    private int totalPages = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProducts();
+    }
+
+    private async Task LoadProducts()
+    {
+        isLoading = true;
+
+        try
+        {
+            pagedResult = await CatalogService.GetProductsAsync(pageSize, currentPage, string.IsNullOrWhiteSpace(searchQuery) ? null : searchQuery);
+            
+            if (pagedResult != null)
+            {
+                products = pagedResult.List?.ToList() ?? new List<ProductDto>();
+                totalPages = (int)Math.Ceiling((double)pagedResult.TotalResults / pageSize);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading products: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task Search()
+    {
+        currentPage = 1;
+        await LoadProducts();
+    }
+
+    private async Task ClearSearch()
+    {
+        searchQuery = string.Empty;
+        currentPage = 1;
+        await LoadProducts();
+    }
+
+    private async Task ChangePage(int page)
+    {
+        if (page < 1 || page > totalPages) return;
+        
+        currentPage = page;
+        await LoadProducts();
+    }
+
+    private void ViewProduct(Guid id)
+    {
+        Navigation.NavigateTo($"/products/{id}");
+    }
+}
