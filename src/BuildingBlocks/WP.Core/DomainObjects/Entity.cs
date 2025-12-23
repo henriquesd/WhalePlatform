@@ -1,4 +1,6 @@
-﻿using WP.Core.Messages;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using WP.Core.Messages;
 
 namespace WP.Core.DomainObjects
 {
@@ -11,8 +13,11 @@ namespace WP.Core.DomainObjects
             Id = Guid.NewGuid();
         }
 
-        private List<Event> _notifications;
-        public IReadOnlyCollection<Event> Notifications => _notifications?.AsReadOnly();
+        private List<Event>? _notifications;
+        
+        [JsonIgnore]
+        [NotMapped]
+        public IReadOnlyCollection<Event>? Notifications => _notifications?.AsReadOnly();
 
         public void AddEvent(Event evento)
         {

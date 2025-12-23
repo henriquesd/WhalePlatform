@@ -17,7 +17,7 @@ namespace WP.Catalog.API.Repositories
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public async Task<PagedResult<Product>> GetAll(int pageSize, int pageIndex, string query = null)
+        public async Task<PagedResult<Product>> GetAll(int pageSize, int pageIndex, string? query = null)
         {
             var sql = @$"SELECT * FROM Products 
                       WHERE (@Name IS NULL OR Name LIKE '%' + @Name + '%') 
@@ -61,6 +61,36 @@ namespace WP.Catalog.API.Repositories
                 .Where(p => idsValue.Contains(p.Id) && p.Active).ToListAsync();
         }
 
+        public async Task<PagedResult<Product>> GetActiveProducts(int pageSize, int pageIndex)
+        {
+            var totalItems = await _context.Products
+                .Where(p => p.Active)
+                .CountAsync();
+
+            var items = await _context.Products
+                .Where(p => p.Active)
+                .OrderBy(p => p.Name)
+                .Skip(pageSize * (pageIndex - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResult<Product>()
+            {
+                List = items,
+                TotalResults = totalItems,
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            };
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsWithLowStock(int threshold)
+        {
+            return await _context.Products
+                .Where(p => p.Active && p.StockQuantity <= threshold)
+                .OrderBy(p => p.StockQuantity)
+                .ToListAsync();
+        }
+
         public void Add(Product product)
         {
             _context.Products.Add(product);
@@ -69,6 +99,11 @@ namespace WP.Catalog.API.Repositories
         public void Update(Product product)
         {
             _context.Products.Update(product);
+        }
+
+        public void Delete(Product product)
+        {
+            _context.Products.Remove(product);
         }
 
         public void Dispose()
