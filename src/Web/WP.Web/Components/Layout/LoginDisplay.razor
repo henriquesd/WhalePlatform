@@ -1,0 +1,78 @@
+@rendermode InteractiveAuto
+
+@if (isAuthenticated)
+{
+    <div class="d-flex align-items-center">
+        <CartWidget />
+        
+        <div class="dropdown d-inline-block ms-2">
+            <a href="#" class="icontext dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="icon icon-sm rounded-circle" 
+                     src="@GetGravatarUrl()" 
+                     alt="User" 
+                     style="width: 35px; height: 35px;">
+            </a>
+            <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="/profile">My Profile</a>
+                <a class="dropdown-item" href="/orders">My Orders</a>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item" @onclick="Logout">Logout</button>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="widget-header">
+        <small class="title text-muted">Welcome!</small>
+        <div>
+            <a href="/register">Create Account</a>
+            <span> | </span>
+            <a href="/login">Login</a>
+        </div>
+    </div>
+}
+
+@code {
+    private bool isAuthenticated = false;
+    private string? userEmail;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO: Implement authentication check
+        // Example:
+        // var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        // isAuthenticated = authState.User.Identity?.IsAuthenticated ?? false;
+        // userEmail = authState.User.Identity?.Name;
+        
+        // For now, simulating unauthenticated state
+        isAuthenticated = false;
+    }
+
+    private string GetGravatarUrl()
+    {
+        if (string.IsNullOrEmpty(userEmail))
+            return "https://www.gravatar.com/avatar/?d=mm&s=45";
+
+        var hash = ComputeMD5Hash(userEmail.Trim().ToLower());
+        return $"https://s.gravatar.com/avatar/{hash}?d=mm&s=45";
+    }
+
+    private string ComputeMD5Hash(string input)
+    {
+        using var md5 = System.Security.Cryptography.MD5.Create();
+        var inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+        var hashBytes = md5.ComputeHash(inputBytes);
+        return Convert.ToHexString(hashBytes).ToLower();
+    }
+
+    private async Task Logout()
+    {
+        // TODO: Implement logout logic
+        // await AuthenticationService.LogoutAsync();
+        // NavigationManager.NavigateTo("/", true);
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+}

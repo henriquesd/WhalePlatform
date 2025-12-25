@@ -1,7 +1,59 @@
 ﻿@page "/"
+@using WP.Web.Services
+@inject AlertService AlertService
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Home - WhalePlatform</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1 class="display-4">Welcome to WhalePlatform Enterprise</h1>
+            <p class="lead">A modern e-commerce platform built with .NET & Blazor</p>
+            
+            <div class="mt-4">
+                <a href="/products" class="btn btn-primary btn-lg me-2">
+                    <i class="fa fa-shopping-bag"></i> Browse Products
+                </a>
+                <a href="/products/form" class="btn btn-outline-primary btn-lg">
+                    <i class="fa fa-plus"></i> Add Product
+                </a>
+            </div>
+        </div>
+    </div>
 
-Welcome to your new app.
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fa fa-box fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Product Catalog</h5>
+                    <p class="card-text">Manage your products with ease. Add, edit, and organize your inventory.</p>
+                    <a href="/products" class="btn btn-sm btn-primary">View Products</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fa fa-shopping-cart fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Shopping Cart</h5>
+                    <p class="card-text">Easy shopping experience with a modern cart system.</p>
+                    <a href="/cart" class="btn btn-sm btn-success">View Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fa fa-user fa-3x text-info mb-3"></i>
+                    <h5 class="card-title">My Account</h5>
+                    <p class="card-text">Manage your profile, orders, and preferences.</p>
+                    <a href="/profile" class="btn btn-sm btn-info">My Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
