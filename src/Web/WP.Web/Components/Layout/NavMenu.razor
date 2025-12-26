@@ -1,44 +1,132 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">WhalePlatform</a>
+@* Navigation Menu Component *@
+@rendermode InteractiveServer
+@implements IDisposable
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img alt="WhalePlatform Enterprise" class="logo" src="/images/logo.png" style="max-height: 50px;">
+        </a>
+        
+        <button class="navbar-toggler" type="button" @onclick="ToggleMobileMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="@NavbarCssClass" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/" Match="NavLinkMatch.All" @onclick="CloseDropdowns">
+                        <i class="fa fa-home"></i> Home
+                    </NavLink>
+                </li>
+                <li class="nav-item dropdown @(productsDropdownOpen ? "show" : "")" 
+                    @onmouseenter="HandleMouseEnter" 
+                    @onmouseleave="HandleMouseLeave">
+                    <button class="nav-link dropdown-toggle btn btn-link" 
+                            type="button"
+                            @onclick="ToggleProductsDropdown">
+                        <i class="fa fa-box"></i> Products
+                    </button>
+                    <ul class="dropdown-menu @(productsDropdownOpen ? "show" : "")" 
+                        @onclick:stopPropagation="true">
+                        <li><NavLink class="dropdown-item" href="/products" @onclick="CloseDropdowns">All Products</NavLink></li>
+                        <li><NavLink class="dropdown-item" href="/products/active" @onclick="CloseDropdowns">Active Products</NavLink></li>
+                        <li><NavLink class="dropdown-item" href="/products/low-stock" @onclick="CloseDropdowns">Low Stock</NavLink></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><NavLink class="dropdown-item" href="/products/form" @onclick="CloseDropdowns"><i class="fa fa-plus"></i> New Product</NavLink></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/cart" @onclick="CloseDropdowns">
+                        <i class="fa fa-shopping-cart"></i> Cart
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/orders" @onclick="CloseDropdowns">
+                        <i class="fa fa-receipt"></i> Orders
+                    </NavLink>
+                </li>
+            </ul>
+
+            <form method="get" action="/products" class="d-flex me-3" @onsubmit="CloseDropdowns">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search products..." style="min-width: 250px;">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <div class="d-flex align-items-center">
+                <LoginDisplay />
+            </div>
+        </div>
     </div>
-</div>
+</nav>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+@code {
+    private bool mobileMenuOpen = false;
+    private bool productsDropdownOpen = false;
+    private System.Threading.Timer? closeTimer;
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+    private string NavbarCssClass => mobileMenuOpen ? "navbar-collapse collapse show" : "navbar-collapse collapse";
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="products">
-                <span class="bi bi-box-seam" aria-hidden="true"></span> Products
-            </NavLink>
-        </div>
+    private void ToggleMobileMenu()
+    {
+        mobileMenuOpen = !mobileMenuOpen;
+        if (!mobileMenuOpen)
+        {
+            CloseDropdowns();
+        }
+        StateHasChanged();
+    }
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="products/create">
-                <span class="bi bi-plus-circle" aria-hidden="true"></span> Create Product
-            </NavLink>
-        </div>
+    private void ToggleProductsDropdown()
+    {
+        productsDropdownOpen = !productsDropdownOpen;
+        Console.WriteLine($"Toggle: productsDropdownOpen = {productsDropdownOpen}");
+        StateHasChanged();
+    }
 
-        <hr class="my-2" />
+    private void HandleMouseEnter()
+    {
+        // Cancel any pending close
+        closeTimer?.Dispose();
+        closeTimer = null;
+        
+        productsDropdownOpen = true;
+        Console.WriteLine("Mouse Enter: Opening dropdown");
+        StateHasChanged();
+    }
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="login">
-                <span class="bi bi-box-arrow-in-right" aria-hidden="true"></span> Login
-            </NavLink>
-        </div>
+    private void HandleMouseLeave()
+    {
+        // Delay closing to allow moving to dropdown
+        closeTimer?.Dispose();
+        closeTimer = new System.Threading.Timer(_ =>
+        {
+            productsDropdownOpen = false;
+            Console.WriteLine("Mouse Leave Timer: Closing dropdown");
+            InvokeAsync(StateHasChanged);
+        }, null, 300, System.Threading.Timeout.Infinite);
+    }
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="register">
-                <span class="bi bi-person-plus" aria-hidden="true"></span> Register
-            </NavLink>
-        </div>
-    </nav>
-</div>
+    private void CloseDropdowns()
+    {
+        closeTimer?.Dispose();
+        closeTimer = null;
+        productsDropdownOpen = false;
+        mobileMenuOpen = false;
+        Console.WriteLine("CloseDropdowns: Closing all");
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        closeTimer?.Dispose();
+    }
+}
+
+
+
 

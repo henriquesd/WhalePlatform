@@ -1,0 +1,81 @@
+@rendermode InteractiveAuto
+
+<a href="/cart" class="widget-header icontext me-3">
+    <div class="icon">
+        <i class="fa fa-shopping-cart text-primary"></i>
+        @if (itemCount > 0)
+        {
+            <span class="notify">@itemCount</span>
+        }
+    </div>
+    <div class="text">
+        <div>
+            <small class="text-muted">My Cart</small>
+        </div>
+        <div>@itemCount item(s)</div>
+    </div>
+</a>
+
+<style>
+    .widget-header {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+    }
+
+    .widget-header:hover {
+        text-decoration: none;
+        color: var(--bs-primary);
+    }
+
+    .widget-header .icon {
+        font-size: 2rem;
+        position: relative;
+        margin-right: 0.5rem;
+    }
+
+    .widget-header .notify {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #dc3545;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: bold;
+    }
+
+    .widget-header .text {
+        line-height: 1.2;
+    }
+
+    .widget-header .text small {
+        display: block;
+        font-size: 0.8rem;
+    }
+
+    .widget-header .text div:last-child {
+        font-weight: 500;
+    }
+</style>
+
+@code {
+    private int itemCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO: Load cart item count from service
+        // Example:
+        // itemCount = await CartService.GetItemCountAsync();
+        
+        // For now, simulating empty cart
+        itemCount = 0;
+    }
+}

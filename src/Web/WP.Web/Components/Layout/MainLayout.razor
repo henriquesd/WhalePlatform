@@ -1,23 +1,64 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+<header class="section-header">
+    <NavMenu />
+</header>
+
+<main style="min-height: 625px;">
+    @Body
+</main>
+
+<footer class="section-footer border-top">
+    <div class="container">
+        <section class="footer-top padding-y">
+            <div class="row">
+                <aside class="col-md-4">
+                    <article class="mr-3">
+                        <img src="/images/logo.png" class="logo-footer" style="max-height: 40px;">
+                        <p class="mt-3">A modern e-commerce platform built with .NET and Blazor.</p>
+                        <div>
+                            <a class="btn btn-icon btn-light" title="Facebook" target="_blank" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-icon btn-light" title="Instagram" target="_blank" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-icon btn-light" title="Youtube" target="_blank" href="#"><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-icon btn-light" title="Twitter" target="_blank" href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </article>
+                </aside>
+                <aside class="col-sm-4 col-md-3">
+                    <h6 class="title">About</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </aside>
+                <aside class="col-sm-4 col-md-3">
+                    <h6 class="title">Services</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">My Orders</a></li>
+                        <li><a href="#">My Profile</a></li>
+                        <li><a href="#">Cancellations</a></li>
+                        <li><a href="#">Refunds</a></li>
+                    </ul>
+                </aside>
+                <aside class="col-sm-2 col-md-2">
+                    <h6 class="title">Mobile</h6>
+                    <a href="#" class="d-block mb-2"><img src="/images/misc/appstore.png" height="40" alt="App Store"></a>
+                    <a href="#" class="d-block mb-2"><img src="/images/misc/playmarket.png" height="40" alt="Play Store"></a>
+                </aside>
+            </div>
+        </section>
+
+        <section class="footer-copyright border-top">
+            <p class="float-left text-muted">WhalePlatform Enterprise</p>
+            <p class="float-right text-muted">
+                Built with ASP.NET Core & Blazor
+            </p>
+        </section>
     </div>
+</footer>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
 
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>
+

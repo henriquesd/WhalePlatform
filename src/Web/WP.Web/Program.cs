@@ -1,6 +1,7 @@
 using WP.Web.Client.Pages;
 using WP.Web.Components;
 using WP.Web.Client.Services;
+using WP.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,9 @@ builder.AddServiceDefaults();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+// Register AlertService as singleton to avoid multiple subscriptions
+builder.Services.AddSingleton<AlertService>();
 
 // Register HTTP services for Server-side rendering
 builder.Services.AddScoped<IIdentityService>(sp =>
