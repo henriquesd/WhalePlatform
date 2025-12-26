@@ -1,4 +1,5 @@
 @* Navigation Menu Component *@
+@implements IDisposable
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
     <div class="container">
@@ -13,15 +14,22 @@
         <div class="@NavbarCssClass" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                    <NavLink class="nav-link" href="/" Match="NavLinkMatch.All" @onclick="CloseDropdowns">
                         <i class="fa fa-home"></i> Home
                     </NavLink>
                 </li>
-                <li class="nav-item dropdown @(productsDropdownOpen ? "show" : "")">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" @onclick="ToggleProductsDropdown" @onclick:preventDefault>
+                <li class="nav-item dropdown @(productsDropdownOpen ? "show" : "")" 
+                    @onmouseenter="HandleMouseEnter" 
+                    @onmouseleave="HandleMouseLeave">
+                    <a class="nav-link dropdown-toggle" 
+                       href="#" 
+                       role="button" 
+                       @onclick="ToggleProductsDropdown" 
+                       @onclick:preventDefault="true">
                         <i class="fa fa-box"></i> Products
                     </a>
-                    <ul class="dropdown-menu @(productsDropdownOpen ? "show" : "")">
+                    <ul class="dropdown-menu @(productsDropdownOpen ? "show" : "")" 
+                        @onclick:stopPropagation="true">
                         <li><NavLink class="dropdown-item" href="/products" @onclick="CloseDropdowns">All Products</NavLink></li>
                         <li><NavLink class="dropdown-item" href="/products/active" @onclick="CloseDropdowns">Active Products</NavLink></li>
                         <li><NavLink class="dropdown-item" href="/products/low-stock" @onclick="CloseDropdowns">Low Stock</NavLink></li>
@@ -30,18 +38,18 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <NavLink class="nav-link" href="/cart">
+                    <NavLink class="nav-link" href="/cart" @onclick="CloseDropdowns">
                         <i class="fa fa-shopping-cart"></i> Cart
                     </NavLink>
                 </li>
                 <li class="nav-item">
-                    <NavLink class="nav-link" href="/orders">
+                    <NavLink class="nav-link" href="/orders" @onclick="CloseDropdowns">
                         <i class="fa fa-receipt"></i> Orders
                     </NavLink>
                 </li>
             </ul>
 
-            <form method="get" action="/products" class="d-flex me-3">
+            <form method="get" action="/products" class="d-flex me-3" @onsubmit="CloseDropdowns">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Search products..." style="min-width: 250px;">
                     <button class="btn btn-primary" type="submit">
@@ -60,6 +68,7 @@
 @code {
     private bool mobileMenuOpen = false;
     private bool productsDropdownOpen = false;
+    private System.Threading.Timer? closeTimer;
 
     private string NavbarCssClass => mobileMenuOpen ? "navbar-collapse collapse show" : "navbar-collapse collapse";
 
@@ -70,17 +79,54 @@
         {
             CloseDropdowns();
         }
+        StateHasChanged();
     }
 
     private void ToggleProductsDropdown()
     {
         productsDropdownOpen = !productsDropdownOpen;
+        Console.WriteLine($"Toggle: productsDropdownOpen = {productsDropdownOpen}");
+        StateHasChanged();
+    }
+
+    private void HandleMouseEnter()
+    {
+        // Cancel any pending close
+        closeTimer?.Dispose();
+        closeTimer = null;
+        
+        productsDropdownOpen = true;
+        Console.WriteLine("Mouse Enter: Opening dropdown");
+        StateHasChanged();
+    }
+
+    private void HandleMouseLeave()
+    {
+        // Delay closing to allow moving to dropdown
+        closeTimer?.Dispose();
+        closeTimer = new System.Threading.Timer(_ =>
+        {
+            productsDropdownOpen = false;
+            Console.WriteLine("Mouse Leave Timer: Closing dropdown");
+            InvokeAsync(StateHasChanged);
+        }, null, 300, System.Threading.Timeout.Infinite);
     }
 
     private void CloseDropdowns()
     {
+        closeTimer?.Dispose();
+        closeTimer = null;
         productsDropdownOpen = false;
         mobileMenuOpen = false;
+        Console.WriteLine("CloseDropdowns: Closing all");
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        closeTimer?.Dispose();
     }
 }
+
+
 
