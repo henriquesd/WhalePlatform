@@ -1,4 +1,5 @@
 @* Navigation Menu Component *@
+@rendermode InteractiveServer
 @implements IDisposable
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
@@ -21,13 +22,11 @@
                 <li class="nav-item dropdown @(productsDropdownOpen ? "show" : "")" 
                     @onmouseenter="HandleMouseEnter" 
                     @onmouseleave="HandleMouseLeave">
-                    <a class="nav-link dropdown-toggle" 
-                       href="#" 
-                       role="button" 
-                       @onclick="ToggleProductsDropdown" 
-                       @onclick:preventDefault="true">
+                    <button class="nav-link dropdown-toggle btn btn-link" 
+                            type="button"
+                            @onclick="ToggleProductsDropdown">
                         <i class="fa fa-box"></i> Products
-                    </a>
+                    </button>
                     <ul class="dropdown-menu @(productsDropdownOpen ? "show" : "")" 
                         @onclick:stopPropagation="true">
                         <li><NavLink class="dropdown-item" href="/products" @onclick="CloseDropdowns">All Products</NavLink></li>
@@ -127,6 +126,7 @@
         closeTimer?.Dispose();
     }
 }
+
 
 
 

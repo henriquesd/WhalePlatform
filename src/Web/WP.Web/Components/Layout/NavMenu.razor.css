@@ -28,6 +28,28 @@
     border-bottom: 2px solid var(--bs-primary);
 }
 
+/* Button as Link - for dropdown toggle */
+.nav-link.btn.btn-link {
+    text-decoration: none;
+    border: none;
+    background: none;
+    color: inherit;
+    padding: 0.5rem 1rem !important;
+    text-align: left;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-link.btn.btn-link:hover {
+    color: var(--bs-primary) !important;
+    background: none;
+}
+
+.nav-link.btn.btn-link:focus {
+    box-shadow: none;
+}
+
 /* Dropdown Styles */
 .dropdown {
     position: relative;
@@ -35,6 +57,17 @@
 
 .dropdown-toggle {
     cursor: pointer;
+}
+
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
 }
 
 .dropdown-menu {
@@ -138,4 +171,5 @@
         display: flex !important;
     }
 }
+
 
